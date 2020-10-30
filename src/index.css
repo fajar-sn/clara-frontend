@@ -5,9 +5,34 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: #000050;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+/*navbar*/
+.navbar-button, .navbar-button:focus, .navbar-button:hover {
+	color : #000050;
+	background-color: transparent;
+	border-color: transparent;
+}
+
+.show>.btn-primary.dropdown-toggle {
+	color : white;
+	background-color: #000050;
+	border-color: transparent;
+}
+
+.nav-link {
+	font-size: 150%;
+}
+
+/*force text primary*/
+.text-primary {
+	color: #000050!important;
+}
+
+

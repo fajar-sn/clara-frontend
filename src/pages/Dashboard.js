@@ -16,13 +16,12 @@ import {
   Navbar,
   Jumbotron,
 } from "react-bootstrap";
-import { Link, useHistory } from "react-router-dom";
 import { logout } from "utils/auth";
 import axios from "axios";
 import { GET_FILMS } from "constants/urls";
+import ClaraNavbar from "../components/Navbar"
 
 const Dashboard = () => {
-  const history = useHistory();
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
   const [film, setFilm] = React.useState();
@@ -42,31 +41,11 @@ const Dashboard = () => {
     return () => {};
   }, []);
 
-  const _onLogout = () => {
-    logout();
-    history.replace("/");
-  };
+  
 
   return (
     <div>
-      <Navbar bg="light" expand="lg">
-        <Container className="p-3" fluid={true}>
-          <Link to="/">
-            <Navbar.Brand color="white">Dashboard</Navbar.Brand>
-          </Link>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ml-auto">
-            <Link className="nav-link" to="/">Home</Link>
-                <Link className="nav-link" to="/asset">Asset</Link>
-                <Link className="nav-link" to="/reservation">Reservation</Link>
-              <Button variant="primary" onClick={_onLogout}>
-                Logout
-              </Button>
-            </Nav>
-          </Navbar.Collapse>
-        </Container >
-      </Navbar>
+      <ClaraNavbar currentPage='Home'/>
       <Jumbotron>
         <Container className="p-3" fluid={true}>
           <h1>Clara</h1>
