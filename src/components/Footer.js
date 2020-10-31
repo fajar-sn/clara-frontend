@@ -1,18 +1,27 @@
 import React from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { Container, Row, Col, CardGroup, Card, Image } from 'react-bootstrap';
 
-function Footer(){
+function ClaraFooter(){
     return(
         <footer className="mt-5">
-            <Container fluid={true}>
-                <Row className="border-top p-3">
-                    <Col className="p-0" md={3} sm={12}>
-                        Clara
+            <Container style={{ backgroundColor: "#383E5F"}} fluid>
+                <Row>
+                    <Col style={{ padding: "50px" }}>
+                        <Image alt="logo" src={require("./ClaraLogoWhite.png")} />
                     </Col>
-                    <Col className="p-0 d-flex justify-content-end">
-                        Aplikasi Peminjaman Barang dan Lab Kampus
+                    <Col style={{ color: "white", padding: "50px"}}>
+                        <h4>About us</h4>
+                        <p>Clara is a platform to connect college
+                            students and college administrative staff
+                            on reservation request.
+                        </p>
+                    </Col>
+                    <Col style={{ color: "white", padding: "50px"}}>
+                        <h4>Contact us</h4>
+                        <p>You can just contact Ilyas, Fajar, Indra, Tiara, Gebby or
+                            Ubai if this platform has bugs that annoy you so much
+                            that you have to contact them.
+                        </p>
                     </Col>
                 </Row>
             </Container>
@@ -20,4 +29,4 @@ function Footer(){
     );
 }
 
-export default Footer;
+export default ClaraFooter;

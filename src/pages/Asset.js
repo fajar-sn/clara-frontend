@@ -10,6 +10,7 @@ import { Link, useHistory } from "react-router-dom";
 import { logout } from "utils/auth";
 import axios from "axios";
 import { GET_FILMS } from "constants/urls";
+import ClaraFooter from "../components/Footer";
 
 const Asset = () => {
   const history = useHistory();
@@ -65,6 +66,7 @@ const Asset = () => {
           </p>
         </Container>
       </Jumbotron>
+      <ClaraFooter />
     </div>
   );
 };
