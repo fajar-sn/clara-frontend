@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Container, Nav, Navbar, Jumbotron } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import ClaraFooter from "../components/Footer";
 
 const Home = () => {
   return (
@@ -28,6 +29,7 @@ const Home = () => {
           <p>Aplikasi Peminjaman Barang dan Lab Kampus</p>
         </Container>
       </Jumbotron>
+      <ClaraFooter />
     </div>
   );
 };

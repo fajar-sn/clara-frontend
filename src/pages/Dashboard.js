@@ -20,6 +20,7 @@ import { logout } from "utils/auth";
 import axios from "axios";
 import { GET_FILMS } from "constants/urls";
 import ClaraNavbar from "../components/Navbar"
+import ClaraFooter from "../components/Footer";
 
 const Dashboard = () => {
   const [loading, setLoading] = React.useState(true);
@@ -54,6 +55,7 @@ const Dashboard = () => {
           </p>
         </Container>
       </Jumbotron>
+      <ClaraFooter />
     </div>
   );
 };
