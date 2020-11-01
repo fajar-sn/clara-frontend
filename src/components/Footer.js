@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col, CardGroup, Card, Image } from 'react-bootstrap';
+import { Container, Row, Col, Image } from 'react-bootstrap';
 
 function ClaraFooter(){
     return(
