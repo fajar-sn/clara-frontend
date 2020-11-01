@@ -33,7 +33,7 @@ const HomePage = () => {
       <Navbar bg="light" expand="lg">
         <Container>
           <Link to="/">
-            <Navbar.Brand color="white">Login</Navbar.Brand>
+            <Navbar.Brand color="white">Log In</Navbar.Brand>
           </Link>
         </Container>
       </Navbar>
@@ -70,7 +70,7 @@ const HomePage = () => {
             />
           </Form.Group>
           <Button variant="primary" onClick={_onSubmit}>
-            Submit
+            Log In
           </Button>
         </Form>
       </Container>

@@ -1,32 +1,69 @@
 import React from "react";
-import { Button, Container, Nav, Navbar, Jumbotron } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import {
+  Button,
+  Container,
+  Nav,
+  Navbar,
+  Jumbotron,
+} from "react-bootstrap";
+import { Link, useHistory } from "react-router-dom";
+import { logout } from "utils/auth";
+import axios from "axios";
+import { GET_FILMS } from "constants/urls";
 import ClaraFooter from "../components/Footer";
 
 const Home = () => {
+  const history = useHistory();
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState(false);
+  const [film, setFilm] = React.useState();
+
+  React.useEffect(() => {
+    axios
+      .get(GET_FILMS)
+      .then((res) => {
+        setLoading(false);
+        setFilm(res.data);
+      })
+      .catch((err) => {
+        setLoading(false);
+        setError(true);
+        console.warn(err);
+      });
+    return () => {};
+  }, []);
+
+  const _onLogout = () => {
+    logout();
+    history.replace("/");
+  };
+
   return (
     <div>
       <Navbar bg="light" expand="lg">
         <Container className="p-3" fluid={true}>
           <Link to="/">
-            <Navbar.Brand color="white">Home</Navbar.Brand>
+            <Navbar.Brand color="white">Asset</Navbar.Brand>
           </Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
-              <Link to="/login">
-                <Button variant="primary">
-                  {localStorage.getItem("USER") ? "Dashboard" : "Login"}
-                </Button>
-              </Link>
+            <Link className="nav-link" to="/">Home</Link>
+                <Link className="nav-link" to="/asset">Asset</Link>
+                <Link className="nav-link" to="/reservation">Reservation</Link>
+              <Button variant="primary" onClick={_onLogout}>
+                Logout
+              </Button>
             </Nav>
           </Navbar.Collapse>
-        </Container>
+        </Container >
       </Navbar>
       <Jumbotron>
         <Container className="p-3" fluid={true}>
-          <h1>Clara</h1>
-          <p>Aplikasi Peminjaman Barang dan Lab Kampus</p>
+          <h1>Asset</h1>
+          <p>
+            Ini merupakan Asset dari Clara-app
+          </p>
         </Container>
       </Jumbotron>
       <ClaraFooter />

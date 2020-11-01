@@ -1,4 +1,5 @@
 import Login from "pages/Login";
+import HomePage from "pages/HomePage";
 import Home from "pages/Home";
 import Dashboard from "pages/Dashboard";
 import Asset from "pages/Asset";
@@ -13,11 +14,18 @@ export const APP_ROUTE = [
     restricted: true,
   },
   {
-    name: "Home",
+    name: "HomePage",
     path: "/",
     exact: true,
-    component: Home,
+    component: HomePage,
     restricted: false,
+  },
+  {
+    name: "Home",
+    path: "/home",
+    exact: true,
+    component: Home,
+    private: true,
   },
   {
     name: "Dashboard",

@@ -10,6 +10,7 @@ import { Link, useHistory } from "react-router-dom";
 import { logout } from "utils/auth";
 import axios from "axios";
 import { GET_FILMS } from "constants/urls";
+import ClaraNavbar from "../components/Navbar"
 import ClaraFooter from "../components/Footer";
 
 const Asset = () => {
@@ -40,29 +41,22 @@ const Asset = () => {
 
   return (
     <div>
-      <Navbar bg="light" expand="lg">
-        <Container className="p-3" fluid={true}>
-          <Link to="/">
-            <Navbar.Brand color="white">Asset</Navbar.Brand>
-          </Link>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
+      <ClaraNavbar currentPage='Asset'/>
+        <Container>
+          <Navbar.Collapse>
             <Nav className="ml-auto">
             <Link className="nav-link" to="/">Home</Link>
-                <Link className="nav-link" to="/asset">Asset</Link>
-                <Link className="nav-link" to="/reservation">Reservation</Link>
               <Button variant="primary" onClick={_onLogout}>
                 Logout
               </Button>
             </Nav>
           </Navbar.Collapse>
-        </Container >
-      </Navbar>
+        </Container>
       <Jumbotron>
         <Container className="p-3" fluid={true}>
-          <h1>Asset</h1>
+          <h1>Clara</h1>
           <p>
-            Ini merupakan Asset dari Clara-app
+            Aplikasi Peminjaman Barang dan Lab Kampus
           </p>
         </Container>
       </Jumbotron>
