@@ -1,16 +1,12 @@
 import React from 'react';
 import {
-  Button,
-  Container,
   Nav,
   Navbar,
-  Jumbotron,
   Image,
   Dropdown,
-  DropdownButton
-
 } from "react-bootstrap";
 import { logout } from "utils/auth";
+import { withRouter } from 'react-router-dom';
 
 class ClaraNavbar extends React.Component{
 	currentPage = this.props.currentPage;
@@ -33,6 +29,13 @@ class ClaraNavbar extends React.Component{
 		return <b>{text}</b>;
 	}
 
+	onLogout = (e) => {
+		e.preventDefault();
+		logout();
+		this.props.history.push("/");
+	};
+
+
 	//<Navbar bg="light" className="d-flex">
 	render(){
 		return(
@@ -43,7 +46,7 @@ class ClaraNavbar extends React.Component{
 		            </Navbar.Brand>
 	          	</Nav.Link>
 	          	
-            	<Nav.Link href="/home" className="text-primary">{this.home}</Nav.Link>
+            	<Nav.Link href="/dashboard" className="text-primary">{this.home}</Nav.Link>
             	<Nav.Link href="/asset" className="text-primary">{this.asset}</Nav.Link>
             	<Nav.Link className="mr-auto text-primary" href="/reservation">{this.reservation}</Nav.Link>
             	<Navbar.Text className="mr-2 title"><Image src={require("./DefaultProfile.png")} roundedCircle /></Navbar.Text>
@@ -52,7 +55,7 @@ class ClaraNavbar extends React.Component{
 	            	<Dropdown.Toggle className="navbar-button">
 					</Dropdown.Toggle>
 					<Dropdown.Menu>
-						<Dropdown.Item href="/">Log Out</Dropdown.Item>
+						<Dropdown.Item href="#/action-1" onClick={this.onLogout}>Logout</Dropdown.Item>
 					</Dropdown.Menu>
 				</Dropdown>
 	      	</Navbar>
@@ -60,4 +63,4 @@ class ClaraNavbar extends React.Component{
 	}
 }
 
-export default ClaraNavbar;
+export default withRouter(ClaraNavbar)
