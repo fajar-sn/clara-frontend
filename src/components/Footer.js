@@ -17,7 +17,7 @@ function ClaraFooter(){
                         </p>
                     </Col>
                     <Col style={{ color: "white", padding: "50px"}}>
-                        <h4>Contact uUs</h4>
+                        <h4>Contact Us</h4>
                         <p>You can just contact Ilyas, Fajar, Indra, Tiara, Gebby or
                             Ubai if this platform has bugs that annoy you so much
                             that you have to contact them.
