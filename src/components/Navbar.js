@@ -7,6 +7,7 @@ import {
 } from "react-bootstrap";
 import { logout } from "utils/auth";
 import { withRouter } from 'react-router-dom';
+import './Navbar.css';
 
 class ClaraNavbar extends React.Component{
 	currentPage = this.props.currentPage;
@@ -51,7 +52,7 @@ class ClaraNavbar extends React.Component{
             	<Nav.Link className="mr-auto text-primary" href="/reservation">{this.reservation}</Nav.Link>
             	<Navbar.Text className="mr-2 title"><Image src={require("./DefaultProfile.png")} roundedCircle /></Navbar.Text>
 	            <Navbar.Text className="mr-2 text-primary"><b>Nama Anda</b><br/>2110181000</Navbar.Text>
-	            <Dropdown drop="left" key="down">
+	            <Dropdown key="down">
 	            	<Dropdown.Toggle className="navbar-button">
 					</Dropdown.Toggle>
 					<Dropdown.Menu>

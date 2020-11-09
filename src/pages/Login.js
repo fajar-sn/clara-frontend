@@ -1,7 +1,9 @@
 import React from "react";
-import { Button, Container, Navbar, Form, Alert } from "react-bootstrap";
+import { Button, Form, Alert, Image, Container, Row, Col } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 import { login } from "utils/auth";
+import './Login.css';
+import './login.png';
 
 const HomePage = () => {
   const [email, setEmail] = React.useState("");
@@ -30,49 +32,46 @@ const HomePage = () => {
   return (
     <div>
       {isLoggedIn && <Redirect to="/dashboard" />}
-      <Navbar bg="light" expand="lg">
-        <Container>
-          <Link to="/">
-            <Navbar.Brand color="white">Log In</Navbar.Brand>
-          </Link>
-        </Container>
-      </Navbar>
-      <Container className="mt-2">
-        <Form>
-          <Alert variant="primary">
-            <span style={{ fontWeight: "bold" }}>Email: </span>
-            clara@email.com,
-            <span style={{ fontWeight: "bold" }}> Password: </span>
-            123456
-          </Alert>
-          {error && <Alert variant="danger">Email atau password salah!</Alert>}
+      <Container className="login">
+        <Row>
+          <Col>
+            <Image alt="Clara" className="logo" src={require("components/ClaraLogo.png")} />
+            <p>Sign into your account!</p>
+            <Form>
+              <Alert variant="primary">
+                <span style={{ fontWeight: "bold" }}>Email: </span>
+                clara@email.com,
+                <span style={{ fontWeight: "bold" }}> Password: </span>
+                123456
+              </Alert>
+              {error && <Alert variant="danger">Email atau password salah!</Alert>}
+              <Form.Group controlId="formBasicEmail">
+                <Form.Control
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </Form.Group>
 
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <Form.Text className="text-muted">
-              We'll never share your email with anyone else.
-            </Form.Text>
-          </Form.Group>
-
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </Form.Group>
-          <Button variant="primary" onClick={_onSubmit}>
-            Log In
-          </Button>
-        </Form>
+              <Form.Group controlId="formBasicPassword">
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </Form.Group>
+              <p><Link to>Forgot password?</Link></p>
+              <Button id="btn-login" variant="primary" onClick={_onSubmit}>
+                SIGN IN
+              </Button>
+            </Form>
+          </Col>
+          <Col xs={7}>
+            <Image alt="Login" className="loginImage" src={require("./login.png")}/>
+          </Col>
+        </Row>
       </Container>
     </div>
   );
