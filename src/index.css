@@ -35,4 +35,17 @@ code {
 	color: #000050!important;
 }
 
+/*reservation detail*/
+.container-page {
+  padding-top: 35px;
+}
+
+.title-page {
+  font-size: 150%;
+}
+
+.row{
+  margin-bottom: 20px;
+}
+
 
