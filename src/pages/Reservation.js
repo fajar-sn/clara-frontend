@@ -1,14 +1,17 @@
 import React from "react";
 import {
+  Button,
   Container,
+  Nav,
+  Navbar,
   Jumbotron,
 } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import { logout } from "utils/auth";
 import axios from "axios";
 import { GET_FILMS } from "constants/urls";
-import ClaraNavbar from "components/Navbar";
-import ClaraFooter from "components/Footer";
+import ClaraNavbar from "../components/Navbar"
+import ClaraFooter from "../components/Footer";
 
 const Reservation = () => {
   const history = useHistory();
@@ -31,9 +34,24 @@ const Reservation = () => {
     return () => {};
   }, []);
 
+  const _onLogout = () => {
+    logout();
+    history.replace("/");
+  };
+
   return (
     <div>
       <ClaraNavbar currentPage='Reservation'/>
+        <Container>
+          <Navbar.Collapse>
+            <Nav className="ml-auto">
+            <Link className="nav-link" to="/">Home</Link>
+              <Button variant="primary" onClick={_onLogout}>
+                Logout
+              </Button>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
       <Jumbotron>
         <Container className="p-3" fluid={true}>
           <h1>Clara</h1>
