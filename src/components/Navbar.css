@@ -1,0 +1,6 @@
+.dropdown-toggle {
+    width: fit-content;
+}
+.dropdown-menu {
+    transform: translateX(-77%);
+}
