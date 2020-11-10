@@ -34,7 +34,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <ClaraNavbar currentPage=''/>
+      <ClaraNavbar currentPage='Home'/>
       <Jumbotron>
         <Container className="p-3" fluid={true}>
           <h1>Clara</h1>
