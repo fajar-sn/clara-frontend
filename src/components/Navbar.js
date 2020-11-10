@@ -6,7 +6,7 @@ import {
   Dropdown,
 } from "react-bootstrap";
 import { logout } from "utils/auth";
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import './Navbar.css';
 
 class ClaraNavbar extends React.Component{
@@ -17,13 +17,14 @@ class ClaraNavbar extends React.Component{
 
 	constructor(props){
 		super(props);
-		if(this.props.currentPage.toUpperCase() == this.home.toUpperCase()){
+
+		if(this.currentPage.toUpperCase() == this.home.toUpperCase()){
 			this.home = this.boldingText(this.home);
-		} else if (this.props.currentPage.toUpperCase() == this.asset.toUpperCase()){
+		} else if (this.currentPage.toUpperCase() == this.asset.toUpperCase()){
 			this.asset = this.boldingText(this.asset);
-		} else if (this.props.currentPage.toUpperCase() == this.reservation.toUpperCase()){
+		} else if (this.currentPage.toUpperCase() == this.reservation.toUpperCase()){
 			this.reservation = this.boldingText(this.reservation);
-		} 
+		}
 	}
 
 	boldingText(text){
@@ -41,22 +42,22 @@ class ClaraNavbar extends React.Component{
 	render(){
 		return(
 			<Navbar className="d-flex shadow-sm" expand="lg">
-				<Nav.Link href="/home">
+				<Link to="/dashboard">
 		            <Navbar.Brand color="white">
 		            	<Image alt="Clara" src={require("./ClaraLogo.png")}/>
 		            </Navbar.Brand>
-	          	</Nav.Link>
-	          	
-            	<Nav.Link href="/dashboard" className="text-primary">{this.home}</Nav.Link>
-            	<Nav.Link href="/asset" className="text-primary">{this.asset}</Nav.Link>
-            	<Nav.Link className="mr-auto text-primary" href="/reservation">{this.reservation}</Nav.Link>
+	          	</Link>
+
+            	<Link to="/dashboard" className="text-primary nav-link">{this.home}</Link>
+            	<Link to="/asset" className="text-primary nav-link">{this.asset}</Link>
+            	<Link className="mr-auto text-primary nav-link" to="/reservation">{this.reservation}</Link>
             	<Navbar.Text className="mr-2 title"><Image src={require("./DefaultProfile.png")} roundedCircle /></Navbar.Text>
 	            <Navbar.Text className="mr-2 text-primary"><b>Nama Anda</b><br/>2110181000</Navbar.Text>
 	            <Dropdown key="down">
 	            	<Dropdown.Toggle className="navbar-button">
 					</Dropdown.Toggle>
 					<Dropdown.Menu>
-						<Dropdown.Item href="#/action-1" onClick={this.onLogout}>Logout</Dropdown.Item>
+						<Dropdown.Item to="#/action-1" onClick={this.onLogout}>Logout</Dropdown.Item>
 					</Dropdown.Menu>
 				</Dropdown>
 	      	</Navbar>

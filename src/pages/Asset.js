@@ -12,6 +12,7 @@ import axios from "axios";
 import { GET_FILMS } from "constants/urls";
 import ClaraNavbar from "../components/Navbar"
 import ClaraFooter from "../components/Footer";
+import AssetTemplate from "../components/asset/AssetTemplate"
 
 const Asset = () => {
   const history = useHistory();
@@ -52,14 +53,7 @@ const Asset = () => {
             </Nav>
           </Navbar.Collapse>
         </Container>
-      <Jumbotron>
-        <Container className="p-3" fluid={true}>
-          <h1>Clara</h1>
-          <p>
-            Aplikasi Peminjaman Barang dan Lab Kampus
-          </p>
-        </Container>
-      </Jumbotron>
+      <AssetTemplate />
       <ClaraFooter />
     </div>
   );
