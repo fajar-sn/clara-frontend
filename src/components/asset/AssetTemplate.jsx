@@ -1,6 +1,5 @@
 import React from "react";
 import {Container, Dropdown, Row, Col, Card, Button, Pagination} from "react-bootstrap"
-// import "./asset.scss"
 
 export default function AssetTemplate(){
   let active = 2;
@@ -35,9 +34,6 @@ export default function AssetTemplate(){
                 <Dropdown.Item >Room</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
-
-
-
           </div>
 
           <div className="card-section mt-4" >
