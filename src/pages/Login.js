@@ -2,8 +2,11 @@ import React from "react";
 import { Button, Form, Alert, Image, Container, Row, Col } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 import { login } from "utils/auth";
+import { POST_LOGIN } from "constants/urls";
 import './Login.css';
 import './login.png';
+import axios from "axios";
+import Cookies from 'js-cookie'
 
 const HomePage = () => {
   const [email, setEmail] = React.useState("");
@@ -19,15 +22,40 @@ const HomePage = () => {
   }, [email, password]);
 
   const _onSubmit = () => {
-    if (email === "clara@email.com" && password === "123456") {
-      login({
-        email: email,
-      });
-      setIsLoggedIn(true);
-    } else {
+    axios.post(POST_LOGIN, {
+      email: email,
+      password: password,
+    })
+    .then(function (response) {
+      console.log(response.data.token);
+
+      if(response.data.role == "Lecturer") { // Role checking
+        login({
+          token: response.data.token,
+          timeout: response.data.expires_in,
+        });
+
+        axios.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
+
+        getUserData()
+        setIsLoggedIn(true);
+      } else {
+        setError(true);
+      }
+    })
+    .catch(function (error) {
       setError(true);
-    }
+    });
   };
+
+  const getUserData = () => {
+    axios.get(process.env.REACT_APP_API_URL + 'profile')
+    .then(function (response) {
+      localStorage.setItem("LOGGED_IN_USER_DATA", JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+    });
+  }
 
   return (
     <div>
@@ -40,9 +68,9 @@ const HomePage = () => {
             <Form>
               <Alert variant="primary">
                 <span style={{ fontWeight: "bold" }}>Email: </span>
-                clara@email.com,
+                triharsono@pens.ac.id,
                 <span style={{ fontWeight: "bold" }}> Password: </span>
-                123456
+                password
               </Alert>
               {error && <Alert variant="danger">Email atau password salah!</Alert>}
               <Form.Group controlId="formBasicEmail">
@@ -62,7 +90,7 @@ const HomePage = () => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </Form.Group>
-              <p><Link to>Forgot password?</Link></p>
+              <p><Link to="/resetPassword">Forgot password?</Link></p>
               <Button id="btn-login" variant="primary" onClick={_onSubmit}>
                 SIGN IN
               </Button>
