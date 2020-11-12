@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Card,
@@ -9,29 +9,123 @@ import {
 } from "react-bootstrap";
 import { logout } from "utils/auth";
 import axios from "axios";
-import { GET_FILMS } from "constants/urls";
+import Cookies from 'js-cookie';
+import { GET_RESERVATION_COUNT, GET_RESERVATION_LIST } from "constants/urls";
 import ClaraNavbar from "../components/Navbar"
 import ClaraFooter from "../components/Footer";
 
 const Dashboard = () => {
-  const [loading, setLoading] = React.useState(true);
-  const [error, setError] = React.useState(false);
-  const [film, setFilm] = React.useState();
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  const [waitingCount, setWaitingCount] = useState();
+  const [reservedCount, setReservedCount] = useState();
+  const [returnedCount, setReturnedCount] = useState();
+  const [reservationList, setReservationList] = useState();
+
+  axios.defaults.headers.common.Authorization = 'Bearer ' + Cookies.get('JWT_TOKEN');
 
   React.useEffect(() => {
-    axios
-      .get(GET_FILMS)
-      .then((res) => {
-        setLoading(false);
-        setFilm(res.data);
-      })
-      .catch((err) => {
-        setLoading(false);
-        setError(true);
-        console.warn(err);
-      });
+    axios.get(GET_RESERVATION_LIST, {
+      params: {
+        limit: '5'
+      }
+    })
+    .then((response) => {
+      setReservationList(response.data);
+    })
+    .catch((error) => {
+      setError(true);
+      console.warn(error);
+    })
+    .then(() => {
+      setIsLoading(false);
+    });
+
     return () => {};
-  }, []); 
+  }, []);
+
+  React.useEffect(() => {
+    axios.get(GET_RESERVATION_COUNT, {
+      params: {
+        status: 'waiting'
+      }
+    })
+    .then((response) => {
+      setWaitingCount(response.data.count);
+    })
+    .catch((error) => {
+      setError(true);
+      console.warn(error);
+    })
+    // .then(() => {
+    //   setIsLoading(false);
+    // });
+
+    axios.get(GET_RESERVATION_COUNT, {
+      params: {
+        status: 'reserve'
+      }
+    })
+    .then((response) => {
+      setReservedCount(response.data.count);
+    })
+    .catch((error) => {
+      setError(true);
+      console.warn(error);
+    })
+    // .then(() => {
+    //   setIsLoading(false);
+    // });
+
+    axios.get(GET_RESERVATION_COUNT, {
+      params: {
+        status: 'return'
+      }
+    })
+    .then((response) => {
+      setReturnedCount(response.data.count);
+    })
+    .catch((error) => {
+      setError(true);
+      console.warn(error);
+    })
+    .then(() => {
+      setIsLoading(false);
+    });
+
+    return () => {};
+  }, []);
+
+  const getStatusColor = (status) => {
+    if(status == 'Waiting on approval') {
+      return 'red';
+    } else if(status == 'On Reservation') {
+      return '#ece31f';
+    } else if(status == 'Returned') {
+      return 'green';
+    }else {
+      return '';
+    }
+  }
+
+  const reservationListMap = (reservationList) => {
+    if (isLoading) {
+      return '';
+    } else {
+      const result = reservationList.map(reservation => (
+          <tr>
+            <th>{1}</th>
+            <td>{reservation.begin}</td>
+            <td>{reservation.user.full_name}</td>
+            <td>{reservation.asset.name}</td>
+            {getStatusColor(reservation)}
+            <td style={{ color: getStatusColor(reservation.status)}}>{reservation.status}</td>
+          </tr>
+        ));
+        return result;
+    }
+  }
 
   return (
     <div>
@@ -48,7 +142,7 @@ const Dashboard = () => {
               <Card.Body>
                 <Card.Title>Waiting for approval</Card.Title>
                 <Card.Text>
-                  <h1>5</h1>
+                  <h1>{isLoading ? '' : waitingCount}</h1>
                 </Card.Text>
               </Card.Body>
               </Col>
@@ -63,7 +157,7 @@ const Dashboard = () => {
               <Card.Body>
                 <Card.Title>On Reservation</Card.Title>
                 <Card.Text>
-                  <h1>5</h1>
+                  <h1>{isLoading ? '' : reservedCount}</h1>
                 </Card.Text>
               </Card.Body>
               </Col>
@@ -78,7 +172,7 @@ const Dashboard = () => {
               <Card.Body>
                 <Card.Title>Returned</Card.Title>
                 <Card.Text>
-                  <h1>5</h1>
+                  <h1>{isLoading ? '' : returnedCount}</h1>
                 </Card.Text>
               </Card.Body>
               </Col>
@@ -93,46 +187,12 @@ const Dashboard = () => {
             <th>#</th>
             <th>Date</th>
             <th>Reservee</th>
-            <th>Item reserved</th>
+            <th>Item / Room reserved</th>
             <th>Status</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>October 13, 2020</td>
-            <td>Fajar Septian</td>
-            <td>Gaming Monitor</td>
-            <td style={{ color: "red"}}>Waiting for Approval</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>October 13, 2020</td>
-            <td>Fajar Septian</td>
-            <td>Gaming Monitor</td>
-            <td style={{ color: "red"}}>Waiting for Approval</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>October 13, 2020</td>
-            <td>Fajar Septian</td>
-            <td>Gaming Monitor</td>
-            <td style={{ color: "red"}}>Waiting for Approval</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>October 13, 2020</td>
-            <td>Fajar Septian</td>
-            <td>Gaming Monitor</td>
-            <td style={{ color: "red"}}>Waiting for Approval</td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td>October 13, 2020</td>
-            <td>Fajar Septian</td>
-            <td>Gaming Monitor</td>
-            <td style={{ color: "red"}}>Waiting for Approval</td>
-          </tr>
+          {isLoading ? ' ' : reservationListMap(reservationList)}
         </tbody>
       </Table>
       </Container>
