@@ -9,14 +9,14 @@ import ReservationDetail from "pages/ReservationDetail";
 export const APP_ROUTE = [
   {
     name: "Login",
-    path: "/login",
+    path: "/",
     exact: true,
     component: Login,
-    restricted: true,
+    restricted: false,
   },
   {
     name: "HomePage",
-    path: "/",
+    path: "/hehe",
     exact: true,
     component: HomePage,
     restricted: false,
