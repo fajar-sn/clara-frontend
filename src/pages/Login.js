@@ -35,9 +35,6 @@ const HomePage = () => {
           timeout: response.data.expires_in,
         });
 
-        axios.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
-
-        getUserData()
         setIsLoggedIn(true);
       } else {
         setError(true);
@@ -47,15 +44,6 @@ const HomePage = () => {
       setError(true);
     });
   };
-
-  const getUserData = () => {
-    axios.get(process.env.REACT_APP_API_URL + 'profile')
-    .then(function (response) {
-      localStorage.setItem("LOGGED_IN_USER_DATA", JSON.stringify(response.data));
-    })
-    .catch(function (error) {
-    });
-  }
 
   return (
     <div>

@@ -2,7 +2,7 @@ import Cookies from 'js-cookie';
 
 export const login = (auth) => {
   // localStorage.setItem("TOKEN", token);
-  Cookies.set('JWT_TOKEN', auth.token);
+  Cookies.set('JWT_TOKEN', auth.token, {expires: auth.timeout});
 };
 
 export const logout = () => {
