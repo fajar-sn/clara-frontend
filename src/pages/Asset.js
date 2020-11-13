@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Container,
@@ -9,51 +9,43 @@ import {
 import { Link, useHistory } from "react-router-dom";
 import { logout } from "utils/auth";
 import axios from "axios";
-import { GET_FILMS } from "constants/urls";
+import Cookies from 'js-cookie';
+import { GET_ASSET_LIST } from "constants/urls";
 import ClaraNavbar from "../components/Navbar"
 import ClaraFooter from "../components/Footer";
 import AssetTemplate from "../components/asset/AssetTemplate"
 
 const Asset = () => {
-  const history = useHistory();
-  const [loading, setLoading] = React.useState(true);
-  const [error, setError] = React.useState(false);
-  const [film, setFilm] = React.useState();
+  const [assetList, setAssetList] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-  React.useEffect(() => {
-    axios
-      .get(GET_FILMS)
-      .then((res) => {
-        setLoading(false);
-        setFilm(res.data);
-      })
-      .catch((err) => {
-        setLoading(false);
-        setError(true);
-        console.warn(err);
-      });
+  axios.defaults.headers.common.Authorization = 'Bearer ' + Cookies.get('JWT_TOKEN');
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    axios.get(GET_ASSET_LIST)
+    .then((response) => {
+      setAssetList(response.data);
+    })
+    .catch((error) => {
+      setError(true);
+      console.warn(error);
+    })
+    .then(() => {
+      setIsLoading(false);
+    });
+
     return () => {};
   }, []);
 
-  const _onLogout = () => {
-    logout();
-    history.replace("/");
-  };
+  console.log(assetList);
 
   return (
     <div>
       <ClaraNavbar currentPage='Asset'/>
-        <Container>
-          <Navbar.Collapse>
-            <Nav className="ml-auto">
-            <Link className="nav-link" to="/">Home</Link>
-              <Button variant="primary" onClick={_onLogout}>
-                Logout
-              </Button>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      <AssetTemplate />
+      {isLoading ? '' : <AssetTemplate assetList={assetList} />}
       <ClaraFooter />
     </div>
   );

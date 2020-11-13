@@ -1,15 +1,66 @@
 import React from "react";
 import { Container, Dropdown, Row, Col, Card, Button, Pagination, Table } from "react-bootstrap"
 
-export default function ReservationTemplate() {
-  let active = 2;
+export default function ReservationTemplate(props) {
+  const reservationList = props.reservationList;
+
+  console.log(reservationList);
+
+  let active = reservationList.current_page;
+  let totalPage = reservationList.last_page;
   let items = [];
-  for (let number = 1; number <= 5; number++) {
-    items.push(
-      <Pagination.Item key={number} active={number === active}>
-        {number}
-      </Pagination.Item>,
-    );
+
+  if(totalPage < 4) {
+    items.push(<Pagination.First disabled />);
+
+    for(let number = 1; number <= totalPage; number++) {
+      items.push(
+        <Pagination.Item key={number} active={number === active}>
+          {number}
+        </Pagination.Item>,
+      );
+    }
+
+    items.push(<Pagination.Last disabled />);
+  } else {
+    items.push(<Pagination.First />);
+
+    for (let number = active - 1; number <= active + 1; number++) {
+      items.push(
+        <Pagination.Item key={number} active={number === active}>
+          {number}
+        </Pagination.Item>,
+      );
+    }
+
+    items.push(<Pagination.Last />);
+  }
+
+
+  const getStatusColor = (status) => {
+    if(status == 'Waiting on approval') {
+      return 'red';
+    } else if(status == 'On Reservation') {
+      return '#ece31f';
+    } else if(status == 'Returned') {
+      return 'green';
+    }else {
+      return '';
+    }
+  }
+
+  const reservationListMap = () => {
+    const result = reservationList.data.map((reservation, index) => (
+        <tr>
+          <td>{index + 1}</td>
+          <td>{reservation.begin}</td>
+          <td>{reservation.user.full_name}</td>
+          <td>{reservation.asset.name}</td>
+          {getStatusColor(reservation)}
+          <td style={{ color: getStatusColor(reservation.status)}}>{reservation.status}</td>
+        </tr>
+      ));
+      return result;
   }
 
   return (
@@ -42,67 +93,12 @@ export default function ReservationTemplate() {
               <th>#</th>
               <th>Date</th>
               <th>Reservee</th>
-              <th>Item reserved</th>
+              <th>Item / Room reserved</th>
               <th>Status</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>October 13, 2020</td>
-              <td>Fajar Septian</td>
-              <td>Gaming Monitor</td>
-              <td style={{ color: "red" }}>Waiting for Approval</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>October 13, 2020</td>
-              <td>Fajar Septian</td>
-              <td>Gaming Monitor</td>
-              <td style={{ color: "red" }}>Waiting for Approval</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>October 13, 2020</td>
-              <td>Fajar Septian</td>
-              <td>Gaming Monitor</td>
-              <td style={{ color: "red" }}>Waiting for Approval</td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>October 13, 2020</td>
-              <td>Fajar Septian</td>
-              <td>Gaming Monitor</td>
-              <td style={{ color: "red" }}>Waiting for Approval</td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td>October 13, 2020</td>
-              <td>Fajar Septian</td>
-              <td>Gaming Monitor</td>
-              <td style={{ color: "red" }}>Waiting for Approval</td>
-            </tr>
-            <tr>
-              <td>6</td>
-              <td>October 13, 2020</td>
-              <td>Fajar Septian</td>
-              <td>Gaming Monitor</td>
-              <td style={{ color: "red" }}>Waiting for Approval</td>
-            </tr>
-            <tr>
-              <td>7</td>
-              <td>October 13, 2020</td>
-              <td>Fajar Septian</td>
-              <td>Gaming Monitor</td>
-              <td style={{ color: "red" }}>Waiting for Approval</td>
-            </tr>
-            <tr>
-              <td>8</td>
-              <td>October 13, 2020</td>
-              <td>Fajar Septian</td>
-              <td>Gaming Monitor</td>
-              <td style={{ color: "red" }}>Waiting for Approval</td>
-            </tr>
+            {reservationListMap()}
           </tbody>
         </Table>
       </Container>
