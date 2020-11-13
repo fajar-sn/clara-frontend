@@ -21,11 +21,13 @@ const Dashboard = () => {
   const [waitingCount, setWaitingCount] = useState();
   const [reservedCount, setReservedCount] = useState();
   const [returnedCount, setReturnedCount] = useState();
-  const [reservationList, setReservationList] = useState();
+  const [reservationList, setReservationList] = useState({});
 
   axios.defaults.headers.common.Authorization = 'Bearer ' + Cookies.get('JWT_TOKEN');
 
   React.useEffect(() => {
+    setIsLoading(true);
+
     axios.get(GET_RESERVATION_LIST, {
       params: {
         limit: '5'
@@ -46,6 +48,8 @@ const Dashboard = () => {
   }, []);
 
   React.useEffect(() => {
+    setIsLoading(true);
+
     axios.get(GET_RESERVATION_COUNT, {
       params: {
         status: 'waiting'
@@ -58,9 +62,6 @@ const Dashboard = () => {
       setError(true);
       console.warn(error);
     })
-    // .then(() => {
-    //   setIsLoading(false);
-    // });
 
     axios.get(GET_RESERVATION_COUNT, {
       params: {
@@ -74,9 +75,6 @@ const Dashboard = () => {
       setError(true);
       console.warn(error);
     })
-    // .then(() => {
-    //   setIsLoading(false);
-    // });
 
     axios.get(GET_RESERVATION_COUNT, {
       params: {
