@@ -23,8 +23,9 @@ const ReservationTable = (props) => {
 
   const reservationListMap = () => {
     // Check if the props data has pagination data or only the reservation.
+    const data = reservationList.data ? reservationList.data : reservationList
 
-    const result = reservationList.data.map((reservation, index) => (
+    const result = data.map((reservation, index) => (
         <tr>
           <td>{index + 1}</td>
           <td>{reservation.begin}</td>

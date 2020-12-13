@@ -153,7 +153,7 @@ const Dashboard = () => {
 
       { isLoading
         ? ''
-        : <ReservationTable reservationList={reservationList} hasPagination={false} />
+        : <ReservationTable reservationList={reservationList} />
       }
 
       </Container>
