@@ -10,41 +10,11 @@ export default function AssetTemplate(props){
 
   console.log(assetList);
 
-  let active = assetList.current_page;
-  let totalPage = assetList.last_page;
-  let items = [];
-
-  if(totalPage < 4) {
-    items.push(<Pagination.First disabled />);
-
-    for(let number = 1; number <= totalPage; number++) {
-      items.push(
-        <Pagination.Item key={number} active={number === active}>
-          {number}
-        </Pagination.Item>,
-      );
-    }
-
-    items.push(<Pagination.Last disabled />);
-  } else {
-    items.push(<Pagination.First />);
-
-    for (let number = active - 1; number <= active + 1; number++) {
-      items.push(
-        <Pagination.Item key={number} active={number === active}>
-          {number}
-        </Pagination.Item>,
-      );
-    }
-
-    items.push(<Pagination.Last />);
-  }
-
   const assetListMap = (listData) => {
     const result = listData.map(asset => (
           <Col>
-            <Card className="rounded">
-              <Card.Img variant="top" src={IMAGE_URL + '/' + asset.type + 's/' + asset.image} />
+            <Card className="rounded" >
+              <Card.Img variant="top" src={IMAGE_URL + asset.image} />
               <Card.Body>
                 <Card.Title>{asset.name}</Card.Title>
                 <Card.Text>
@@ -93,10 +63,6 @@ export default function AssetTemplate(props){
             </Row>
           </div>
 
-        </Container>
-
-        <Container className="mt-4">
-          <Pagination className="float-right">{items}</Pagination>
         </Container>
         <br />
     </div>

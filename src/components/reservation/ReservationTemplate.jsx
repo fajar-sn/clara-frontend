@@ -10,30 +10,32 @@ export default function ReservationTemplate(props) {
   let totalPage = reservationList.last_page;
   let items = [];
 
-  if(totalPage < 4) {
-    items.push(<Pagination.First disabled />);
+  const getPaginationItem = () => {
+    if(totalPage < 6) {
+      items.push(<Pagination.First disabled />);
 
-    for(let number = 1; number <= totalPage; number++) {
-      items.push(
-        <Pagination.Item key={number} active={number === active}>
-          {number}
-        </Pagination.Item>,
-      );
+      for(let number = 1; number <= totalPage; number++) {
+        items.push(
+          <Pagination.Item key={number} active={number === active}>
+            {number}
+          </Pagination.Item>,
+        );
+      }
+
+      items.push(<Pagination.Last disabled />);
+    } else {
+      items.push(<Pagination.First />);
+
+      for (let number = active - 1; number <= active + 1; number++) {
+        items.push(
+          <Pagination.Item key={number} active={number === active}>
+            {number}
+          </Pagination.Item>,
+        );
+      }
+
+      items.push(<Pagination.Last />);
     }
-
-    items.push(<Pagination.Last disabled />);
-  } else {
-    items.push(<Pagination.First />);
-
-    for (let number = active - 1; number <= active + 1; number++) {
-      items.push(
-        <Pagination.Item key={number} active={number === active}>
-          {number}
-        </Pagination.Item>,
-      );
-    }
-
-    items.push(<Pagination.Last />);
   }
 
 

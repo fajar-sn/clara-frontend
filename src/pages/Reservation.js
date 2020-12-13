@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from "react";
 import {
-  Button,
-  Container,
-  Nav,
-  Navbar,
-  Jumbotron,
+  Container
 } from "react-bootstrap";
-import { Link, useHistory } from "react-router-dom";
 import Cookies from 'js-cookie';
 import axios from "axios";
 import { GET_RESERVATION_LIST } from "constants/urls";
 import ClaraNavbar from "../components/Navbar"
 import ClaraFooter from "../components/Footer";
-import ReservationTemplate from "../components/reservation/ReservationTemplate"
+import ReservationTable from "../components/ReservationTable";
+import Pagination from "react-js-pagination";
 
 const Reservation = () => {
-  const [reservationList, setReservationList] = useState({});
-  const [isloading, setIsLoading] = useState(true);
+  const [pageIndex, setPageIndex] = useState(1);
+  const [totalItemsCount, setTotalItemsCount] = useState();
+  const [itemsCountPerPage, setItemsCountPerPage] = useState();
+  const [reservationList, setReservationList] = useState();
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
 
   axios.defaults.headers.common.Authorization = 'Bearer ' + Cookies.get('JWT_TOKEN');
@@ -24,9 +23,12 @@ const Reservation = () => {
   useEffect(() => {
     setIsLoading(true);
 
-    axios.get(GET_RESERVATION_LIST)
+    axios.get(GET_RESERVATION_LIST + pageIndex)
     .then((response) => {
       setReservationList(response.data);
+
+      setItemsCountPerPage(response.data.per_page);
+      setTotalItemsCount(response.data.total);
     })
     .catch((error) => {
       setError(true);
@@ -39,11 +41,39 @@ const Reservation = () => {
     return () => {};
   }, []);
 
+  const handlePageChange = (e) => {
+    setPageIndex(e);
+  }
+
   return (
     <div>
       <ClaraNavbar currentPage='Reservation'/>
-      { isloading ? '' : <ReservationTemplate reservationList={reservationList} />
-      }
+      <Container className="mt-4">
+        <span className="mr-auto h3">
+          Reservation
+        </span>
+        { isLoading
+          ? ''
+          : <ReservationTable reservationList={reservationList} hasPagination={true} />
+        }
+
+        <Container className="d-flex flex-row-reverse">
+        {isLoading
+          ? ''
+          : <Pagination
+            hideNavigation
+            pageRangeDisplayed={5}
+            activePage={pageIndex}
+            itemsCountPerPage={itemsCountPerPage}
+            totalItemsCount={totalItemsCount}
+            onChange={handlePageChange}
+            itemClass="page-item float-right"
+            linkClass="page-link"
+            />
+          }
+        </Container>
+
+      </Container>
       <ClaraFooter />
     </div>
   );
