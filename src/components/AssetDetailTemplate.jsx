@@ -27,7 +27,7 @@ export default function AssetDetailTemplate(props) {
     
     axios.post(GET_ASSET_DETAIL+assetID,formData,{
       headers:{
-        'Content-Type':'multipart/form-data'
+        'Content-Type': 'application/x-www-form-urlencoded'
       },
     })
     .then((response) => {
