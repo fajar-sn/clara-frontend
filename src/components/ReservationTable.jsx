@@ -23,7 +23,7 @@ const ReservationTable = (props) => {
 
   const reservationListMap = () => {
     // Check if the props data has pagination data or only the reservation.
-    const data = reservationList.data ? reservationList.data : reservationList
+    const data = typeof reservationList.data === "undefined" ? reservationList : reservationList.data;
 
     const result = data.map((reservation, index) => (
         <tr>

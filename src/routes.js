@@ -5,6 +5,8 @@ import Dashboard from "pages/Dashboard";
 import Asset from "pages/Asset";
 import Reservation from "pages/Reservation";
 import ReservationDetail from "pages/ReservationDetail";
+import AssetDetail from "pages/AssetDetail";
+import AssetCreate from "pages/AssetCreate"
 
 export const APP_ROUTE = [
   {
@@ -54,6 +56,20 @@ export const APP_ROUTE = [
     path: "/reservationdetail",
     exact: true,
     component: ReservationDetail,
+    private: false,
+  },
+  {
+    name: "AssetDetail",
+    path: "/assetdetail",
+    exact: true,
+    component: AssetDetail,
+    private: false,
+  },
+  {
+    name: "AssetCreate",
+    path: "/assetcreate",
+    exact: true,
+    component: AssetCreate,
     private: false,
   },
 ];
