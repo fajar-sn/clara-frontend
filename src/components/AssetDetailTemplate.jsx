@@ -7,12 +7,14 @@ import './AssetDetailTemplate.css';
 import FormData from 'form-data'
 
 export default function AssetDetailTemplate(props) {
+  //console.log("asset" in props)
   const asset = props.asset;
   const assetID = asset._id;
   var assetName = asset.name;
   var assetQuantity = asset.quantity;
   const assetImage = IMAGE_URL + asset.image;
   var newImage;
+
   
   const updateAsset = () => {
     console.log(asset._id)
@@ -27,7 +29,7 @@ export default function AssetDetailTemplate(props) {
     
     axios.post(GET_ASSET_DETAIL+assetID,formData,{
       headers:{
-        'Content-Type': 'application/x-www-form-urlencoded'
+        //'Content-Type': 'application/x-www-form-urlencoded'
       },
     })
     .then((response) => {
