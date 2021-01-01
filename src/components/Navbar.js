@@ -6,7 +6,7 @@ import {
   Dropdown,
 } from "react-bootstrap";
 import { logout, isLogin } from "utils/auth";
-import { GET_LOGGED_IN_USER_DATA } from 'constants/urls';
+import { GET_LOGGED_IN_USER_DATA, USER_LOGOUT } from 'constants/urls';
 import { withRouter, Link, useLocation, useHistory } from 'react-router-dom';
 import './Navbar.css';
 import axios from 'axios';
@@ -42,8 +42,18 @@ const ClaraNavbar = (props) => {
 
   const onLogout = (e) => {
 		e.preventDefault();
-		logout();
-		history.push("/");
+
+    axios.defaults.headers.common.Authorization = 'Bearer ' + Cookies.get('JWT_TOKEN');
+
+    axios.get(USER_LOGOUT)
+      .then((response) => {
+        logout();
+    		history.push("/");
+      })
+      .catch((error) => {
+        setError(true);
+        console.warn(error);
+      });
 	};
 
   useEffect(() => {

@@ -10,3 +10,5 @@ export const GET_ASSET_LIST = `${BASE_URL}/assets?page=`;
 export const GET_ASSET_DETAIL = `${BASE_URL}/asset/`;
 export const POST_ASSET_CREATE = `${BASE_URL}/asset/`;
 export const IMAGE_URL = 'https://api.clara-app.tech/image/';
+export const USER_LOGOUT = `${BASE_URL}/logout`;
+export const GET_SEARCH_ASSET = `${BASE_URL}/asset/search?name=`;

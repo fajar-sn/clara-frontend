@@ -39,7 +39,7 @@ const Reservation = () => {
     });
 
     return () => {};
-  }, []);
+  }, [pageIndex]);
 
   const handlePageChange = (e) => {
     setPageIndex(e);
