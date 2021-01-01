@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Form, Alert, Image, Container, Row, Col } from "react-bootstrap";
-import { Link, Redirect } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { login } from "utils/auth";
 import { POST_LOGIN } from "constants/urls";
 import './Login.css';
@@ -13,6 +13,7 @@ const HomePage = () => {
   const [password, setPassword] = React.useState("");
   const [error, setError] = React.useState(false);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const history = useHistory();
 
   React.useEffect(() => {
     if (email || password) {
@@ -36,6 +37,9 @@ const HomePage = () => {
         });
 
         setIsLoggedIn(true);
+
+        history.push("/dashboard");
+
       } else {
         setError(true);
       }
@@ -47,7 +51,6 @@ const HomePage = () => {
 
   return (
     <div>
-      {isLoggedIn && <Redirect to="/dashboard" />}
       <Container className="login">
         <Row>
           <Col>
