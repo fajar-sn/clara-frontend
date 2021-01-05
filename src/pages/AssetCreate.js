@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Cookies from 'js-cookie';
 import axios from "axios";
-import { Container, Dropdown, Row, Col, Card, Button, Pagination, Table, Image, Form } from "react-bootstrap";
+import { Container, Dropdown, Row, Col, Card, Button, Pagination, Table, Image, Form, Alert} from "react-bootstrap";
 import { POST_ASSET_CREATE } from "constants/urls";
 import ClaraNavbar from "../components/Navbar"
 import AssetDetailTemplate from "../components/AssetDetailTemplate";
@@ -12,9 +12,11 @@ const AssetCreate = () => {
   var assetName;
   var assetQuantity;
   var newImage;
+  const [showAlert, setShowAlert] = useState(false);
+
 
   const history = useHistory();
-  
+
 
   axios.defaults.headers.common.Authorization = 'Bearer ' + Cookies.get('JWT_TOKEN');
 
@@ -27,7 +29,7 @@ const AssetCreate = () => {
     formData.append("name",assetName);
     formData.append("quantity",assetQuantity);
     formData.append("image",newImage);
-    
+
     axios.post(POST_ASSET_CREATE,formData,{
       headers:{
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -35,7 +37,7 @@ const AssetCreate = () => {
     })
     .then((response) => {
       console.log(response);
-      history.push('/asset')
+      setShowAlert(true);
     })
     .catch((error) => {
       console.warn(error);
@@ -47,6 +49,13 @@ const AssetCreate = () => {
       <ClaraNavbar currentPage='Asset'/>
       <div className="mt-4">
       <Container>
+        {
+          showAlert ?
+          <Alert variant="success">
+            Success! Asset has been created.
+          </Alert>
+          : ''
+        }
         <div className="header d-flex align-items-center">
           <span className="mr-auto h3">
             Create Asset
@@ -54,9 +63,10 @@ const AssetCreate = () => {
         </div>
         <Row>
           <Col xs={1} md={1}>
-            
+
           </Col>
           <Col xs={10} md={6}>
+
 
             <Row>
               <Form>
@@ -64,7 +74,7 @@ const AssetCreate = () => {
                   <Form.Label>Name</Form.Label>
                   <Form.Control type="text" placeholder="Asset Name" onChange={(e) => assetName = e.target.value}/>
                 </Form.Group>
-              
+
                 <Form.Group controlId="formQuantity">
                   <Form.Label>Quantity</Form.Label>
                   <Form.Control type="text" placeholder="Quantity" onChange={(e) => assetQuantity = e.target.value}/>
@@ -74,17 +84,19 @@ const AssetCreate = () => {
                   <Form.Label>Image</Form.Label>
                   <Form.Control type="file" placeholder="Image" onChange={(e) => newImage = e.target.files[0]}/>
                 </Form.Group>
-              
+
                 <Form.Group>
                   <Button className="action-button" onClick={() => saveAsset()}>
                     Save
-                  </Button> 
+                  </Button>
                 </Form.Group>
               </Form>
             </Row>
           </Col>
           <Col xs={0} md={2} />
         </Row>
+
+
 
       </Container>
       <br />

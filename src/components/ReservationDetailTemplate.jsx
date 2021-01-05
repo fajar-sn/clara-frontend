@@ -1,5 +1,5 @@
-import React from "react";
-import { Container, Dropdown, Row, Col, Card, Button, Pagination, Table, Image, Form } from "react-bootstrap"
+import React, {useState} from "react";
+import { Container, Dropdown, Row, Col, Card, Button, Pagination, Table, Image, Form, Alert } from "react-bootstrap"
 import { IMAGE_URL, GET_RESERVATION_DETAIL } from 'constants/urls';
 import axios from "axios";
 import Cookies from 'js-cookie';
@@ -14,6 +14,7 @@ export default function ReservationDetailTemplate(props) {
   const assetImage = IMAGE_URL + reservationAsset.image;
 
   const [description, setDescription] = React.useState("");
+  const [showAlert, setShowAlert] = useState(false);
 
   const getStatusUpdateList = () => {
     const result = reservationHistory.map(history => (
@@ -23,7 +24,7 @@ export default function ReservationDetailTemplate(props) {
           </Col>
 
       ));
-      
+
       return result;
   }
 
@@ -54,7 +55,7 @@ export default function ReservationDetailTemplate(props) {
         case "Rejected":
           break;
       }
-    
+
     const buttons = <Form.Row>
                       {rejectButton}
                       &nbsp;
@@ -91,29 +92,37 @@ export default function ReservationDetailTemplate(props) {
       newStatus = "Returned";
     }
 
-    
+
     axios.put(GET_RESERVATION_DETAIL+reservationID,{
       status:newStatus,
       description:description,
     })
     .then((response) => {
       console.log(response);
+      setShowAlert(true);
     })
     .catch((error) => {
       console.warn(error);
     });
-
-    window.location.reload();
   }
 
   return (
     <div className="reservation-template mt-4">
       <Container>
+        {
+          showAlert ?
+          <Alert variant="success">
+            Success! Reservation has been updated.
+          </Alert>
+          : ''
+        }
         <div className="header d-flex align-items-center">
+
           <span className="mr-auto h3">
             Reservation Detail
             </span>
         </div>
+
         <Row>
           <Col xs={8} md={4}>
             <Image src={assetImage} fluid />
@@ -159,13 +168,13 @@ export default function ReservationDetailTemplate(props) {
             </Row>
             <Row>
               <Form>
-              <Form.Row>  
+              <Form.Row>
                 {getDescriptionForm()}
-                
+
               </Form.Row>
-              
+
                 {getActionButtons()}
-              
+
               </Form>
             </Row>
           </Col>
