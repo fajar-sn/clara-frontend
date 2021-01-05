@@ -26,6 +26,27 @@ const Asset = () => {
   useEffect(() => {
     setIsLoading(true);
 
+    axios.get(GET_SEARCH_ASSET + searchKeyword)
+    .then((response) => {
+      setAssetList(response.data);
+
+      // Currently set to 0 to remove the pagination.
+      // setTotalItemsCount(0);
+    })
+    .catch((error) => {
+      setError(true);
+      console.warn(error);
+    })
+    .then(() => {
+      setIsLoading(false);
+    });
+
+    // setSearchKeyword("");
+  }, [searchKeyword]);
+
+  useEffect(() => {
+    setIsLoading(true);
+
     axios.get(GET_ASSET_LIST + pageIndex)
     .then((response) => {
       setAssetList(response.data.data);
@@ -43,26 +64,7 @@ const Asset = () => {
 
   }, [pageIndex]);
 
-  useEffect(() => {
-    setIsLoading(true);
 
-    axios.get(GET_SEARCH_ASSET + searchKeyword)
-    .then((response) => {
-      setAssetList(response.data);
-
-      // Currently set to 0 to remove the pagination.
-      setTotalItemsCount(0);
-    })
-    .catch((error) => {
-      setError(true);
-      console.warn(error);
-    })
-    .then(() => {
-      setIsLoading(false);
-    });
-
-    // setSearchKeyword("");
-  }, [searchKeyword]);
 
   const handlePageChange = (e) => {
     setPageIndex(e);
