@@ -1,8 +1,6 @@
-import React, {useState} from "react";
-import { Container, Dropdown, Row, Col, Card, Button, Pagination, Table, Image, Form, Alert } from "react-bootstrap"
-import { IMAGE_URL, GET_RESERVATION_DETAIL } from 'constants/urls';
-import axios from "axios";
-import Cookies from 'js-cookie';
+import React, { useRef } from "react";
+import { Container,  Row, Col,  Button,   Image, Form, Alert } from "react-bootstrap"
+import { IMAGE_URL } from 'constants/urls';
 import './ReservationDetailTemplate.css';
 
 export default function ReservationDetailTemplate(props) {
@@ -13,8 +11,10 @@ export default function ReservationDetailTemplate(props) {
   const reservationID = reservation._id;
   const assetImage = IMAGE_URL + reservationAsset.image;
 
-  const [description, setDescription] = React.useState("");
-  const [showAlert, setShowAlert] = useState(false);
+  const updateReservation = props.onActionButtonClick
+
+  // const [description, setDescription] = React.useState("");
+  const description = useRef("");
 
   const getStatusUpdateList = () => {
     const result = reservationHistory.map(history => (
@@ -35,16 +35,16 @@ export default function ReservationDetailTemplate(props) {
 
     switch(reservation.status) {
         case "Waiting on approval":
-          approveButton = <Button className="action-button" onClick={() => updateReservation("Approve")}>
+          approveButton = <Button className="action-button" onClick={() => onActionButtonClick("Approve")}>
                           Approve
                         </Button>
-          rejectButton = <Button className="action-button-secondary" onClick={() => updateReservation("Reject")}>
+          rejectButton = <Button className="action-button-secondary" onClick={() => onActionButtonClick("Reject")}>
                           Reject
                         </Button>
           break;
 
         case "On Reservation":
-          returnButton = <Button className="action-button" onClick={() => updateReservation("Return")}>
+          returnButton = <Button className="action-button" onClick={() => onActionButtonClick("Return")}>
                           Return
                         </Button>
           break;
@@ -75,14 +75,16 @@ export default function ReservationDetailTemplate(props) {
                   <Form.Control
                     type="text"
                     placeholder="Action Description"
-                    onChange={(e) => setDescription(e.target.value)}
+                    inputRef={description}
+
                   />
                 </Form.Group>
   }
+  // LINE 79
+  // onChange={(e) => setDescription(e.target.value)}
 
-  axios.defaults.headers.common.Authorization = 'Bearer ' + Cookies.get('JWT_TOKEN');
 
-  const updateReservation = (action) => {
+  const onActionButtonClick = (action) => {
     var newStatus;
     if(action == "Approve"){
       newStatus = "On Reservation";
@@ -92,30 +94,17 @@ export default function ReservationDetailTemplate(props) {
       newStatus = "Returned";
     }
 
+    const data = {
+      status: newStatus,
+      description: description
+    }
 
-    axios.put(GET_RESERVATION_DETAIL+reservationID,{
-      status:newStatus,
-      description:description,
-    })
-    .then((response) => {
-      console.log(response);
-      setShowAlert(true);
-    })
-    .catch((error) => {
-      console.warn(error);
-    });
+    updateReservation(data)
   }
 
   return (
     <div className="reservation-template mt-4">
       <Container>
-        {
-          showAlert ?
-          <Alert variant="success">
-            Success! Reservation has been updated.
-          </Alert>
-          : ''
-        }
         <div className="header d-flex align-items-center">
 
           <span className="mr-auto h3">
