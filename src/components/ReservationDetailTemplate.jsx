@@ -68,7 +68,7 @@ export default function ReservationDetailTemplate(props) {
   }
 
   const getDescriptionForm = () => {
-    if (reservation.status == "Returned" || reservation.status == "Rejected"){
+    if (reservation.status == "Returned" || reservation.status == "Rejected" || reservation.status == "Denied"){
       return null
     }
     return <Form.Group controlId="formDescription">

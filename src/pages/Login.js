@@ -1,12 +1,14 @@
 import React from "react";
 import { Button, Form, Alert, Image, Container, Row, Col } from "react-bootstrap";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { login } from "utils/auth";
 import { POST_LOGIN } from "constants/urls";
 import './Login.css';
-import './login.png';
+import loginPicture from '../assets/login.png';
 import axios from "axios";
-import Cookies from 'js-cookie'
+import claraLogo from '../assets/logo.png'
+import googlePlayBadge from '../assets/google-play-badge.svg'
+import windowsBadge from '../assets/windows-badge.png'
 
 const HomePage = () => {
   const [email, setEmail] = React.useState("");
@@ -54,20 +56,16 @@ const HomePage = () => {
       <Container className="login">
         <Row>
           <Col>
-            <Image alt="Clara" className="logo" src={require("components/ClaraLogo.png")} />
+
+            <Image alt="Clara" className="logo" src={claraLogo} fluid width={"250px"}/>
             <p>Sign into your account!</p>
-            <Form>
-              <Alert variant="primary">
-                <span style={{ fontWeight: "bold" }}>Email: </span>
-                triharsono@pens.ac.id,
-                <span style={{ fontWeight: "bold" }}> Password: </span>
-                password
-              </Alert>
-              {error && <Alert variant="danger">Email atau password salah!</Alert>}
+
+            <Form className="mb-5">
+              {error && <Alert variant="danger">Login Failed. Please check your input again.</Alert>}
               <Form.Group controlId="formBasicEmail">
                 <Form.Control
                   type="email"
-                  placeholder="Email"
+                  placeholder="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -76,19 +74,27 @@ const HomePage = () => {
               <Form.Group controlId="formBasicPassword">
                 <Form.Control
                   type="password"
-                  placeholder="Password"
+                  placeholder="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </Form.Group>
-              <p><Link to="/resetPassword">Forgot password?</Link></p>
               <Button id="btn-login" variant="primary" onClick={_onSubmit}>
                 SIGN IN
               </Button>
             </Form>
+
+            <a href="https://www.google.com">
+            <Image src={googlePlayBadge} width={"160px"} ></Image>
+            </a>
+
+            <a href="https://clara-app.tech/desktop-installer.zip">
+            <Image src={windowsBadge} width={"155px"} href="https://clara-app.tech/desktop-installer.zip"></Image>
+            </a>
+
           </Col>
           <Col xs={7}>
-            <Image alt="Login" className="loginImage" src={require("./login.png")}/>
+            <Image alt="Login" className="loginImage" src={loginPicture}/>
           </Col>
         </Row>
       </Container>

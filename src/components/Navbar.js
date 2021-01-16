@@ -11,6 +11,7 @@ import { withRouter, Link, useLocation, useHistory } from 'react-router-dom';
 import './Navbar.css';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import claraLogo from '../assets/logo.png'
 
 
 const ClaraNavbar = (props) => {
@@ -85,7 +86,7 @@ const ClaraNavbar = (props) => {
     <Navbar className="d-flex shadow-sm" expand="lg">
       <Link to="/dashboard">
               <Navbar.Brand color="white">
-                <Image alt="Clara" src={require("./ClaraLogo.png")}/>
+                <Image alt="Clara" src={claraLogo} height="50px"/>
               </Navbar.Brand>
             </Link>
 

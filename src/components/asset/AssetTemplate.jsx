@@ -21,8 +21,8 @@ export default function AssetTemplate(props){
                   assetID: asset._id,
                 }
             }}>
-            <Card className="rounded">
-              <Card.Img variant="top" src={IMAGE_URL + asset.image} />
+            <Card className="rounded" >
+              <Card.Img variant="top" src={IMAGE_URL + asset.image} height="250px" />
               <Card.Body>
                 <Card.Title>{asset.name}</Card.Title>
                 <Card.Text>
