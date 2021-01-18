@@ -84,12 +84,12 @@ const HomePage = () => {
               </Button>
             </Form>
 
-            <a href="https://www.google.com">
+            <a rel="noreferrer noopener" target="_blank" href="https://drive.google.com/file/d/15Ql1UN8UbxWw0rx4So4Q25e3lboMFNkc/view?usp=sharing">
             <Image src={googlePlayBadge} width={"160px"} ></Image>
             </a>
 
-            <a href="https://clara-app.tech/desktop-installer.zip">
-            <Image src={windowsBadge} width={"155px"} href="https://clara-app.tech/desktop-installer.zip"></Image>
+            <a rel="noreferrer noopener" target="_blank" href="https://drive.google.com/file/d/1Of0S6u_4cw8xiYWbGhrYMOtSJX_cyPoS/view?usp=sharing">
+            <Image src={windowsBadge} width={"155px"} ></Image>
             </a>
 
           </Col>
