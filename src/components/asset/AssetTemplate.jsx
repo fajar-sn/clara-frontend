@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col, Card } from "react-bootstrap"
 import { IMAGE_URL } from 'constants/urls';
 import { Link } from "react-router-dom";
-
+import "./AssetTemplate.css"
 
 export default function AssetTemplate(props){
 
@@ -14,15 +14,15 @@ export default function AssetTemplate(props){
 
   const assetListMap = (listData) => {
     const result = listData.map(asset => (
-          <Col>
+          <Col xs={12} md={3} align="center">
             <Link to={{
                 pathname: '/assetDetail',
                 state: {
                   assetID: asset._id,
                 }
             }}>
-            <Card className="rounded" >
-              <Card.Img variant="top" src={IMAGE_URL + asset.image} height="250px" />
+            <Card style={{ width: '16rem' }}>
+              <Card.Img variant="top" src={IMAGE_URL + asset.image} className="image-fit" />
               <Card.Body>
                 <Card.Title>{asset.name}</Card.Title>
                 <Card.Text>
