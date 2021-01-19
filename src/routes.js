@@ -5,6 +5,7 @@ import Reservation from "pages/Reservation";
 import ReservationDetail from "pages/ReservationDetail";
 import AssetDetail from "pages/AssetDetail";
 import AssetCreate from "pages/AssetCreate"
+import AboutUs from "pages/AboutUs"
 
 export const APP_ROUTE = [
   {
@@ -54,6 +55,13 @@ export const APP_ROUTE = [
     path: "/assetcreate",
     exact: true,
     component: AssetCreate,
+    private: false,
+  },
+  {
+    name: "About Us",
+    path: "/aboutus",
+    exact: true,
+    component: AboutUs,
     private: false,
   },
 ];

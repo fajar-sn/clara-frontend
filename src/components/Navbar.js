@@ -40,6 +40,7 @@ const ClaraNavbar = (props) => {
   const homeText = checkBoldNavbar('Home');
   const assetText = checkBoldNavbar('Asset');
   const reservationText = checkBoldNavbar('Reservation');
+  const aboutUsText = checkBoldNavbar('About Us');
 
   const onLogout = (e) => {
 		e.preventDefault();
@@ -92,7 +93,10 @@ const ClaraNavbar = (props) => {
 
             <Link to="/dashboard" className="text-primary nav-link">{homeText}</Link>
             <Link to="/asset" className="text-primary nav-link">{assetText}</Link>
-            <Link className="mr-auto text-primary nav-link" to="/reservation">{reservationText}</Link>
+            <Link className="text-primary nav-link" to="/reservation">{reservationText}</Link>
+            <Link className="mr-auto text-primary nav-link" to="/aboutus">{aboutUsText}</Link>
+
+
             <Navbar.Text className="mr-2 title"><Image src={require("./DefaultProfile.png")} roundedCircle /></Navbar.Text>
             <Navbar.Text className="mr-2 text-primary"><b>{ isLoading ? '' : loggedInUserData.full_name }</b><br/>{ isLoading ? '' : loggedInUserData.nip }</Navbar.Text>
             <Dropdown key="down">
