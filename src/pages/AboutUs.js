@@ -162,7 +162,7 @@ function AboutUs() {
         </div>
 
 
-        <h4 align="center" className="mt-4">Sponsored by</h4>
+        <h4 align="center" className="mt-4">Supported by</h4>
           <Row align="center" className="mt-4">
             <Image src={SupportLogos} className="img-fluid" />
           </Row>
